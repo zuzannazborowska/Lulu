@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import java.io.IOException;
 public class Mic extends AppCompatActivity {
 
 
+    Boolean mStartPlaying = true;
+    Boolean mStartRecording = true;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -82,10 +85,9 @@ public class Mic extends AppCompatActivity {
     private void startRecording() {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
             mRecorder.prepare();
         } catch (IOException e) {
@@ -116,13 +118,15 @@ public class Mic extends AppCompatActivity {
     private  MyStringRequest myrqst;
 
     @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mic);
+
 
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/myrecording.mp3";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -133,35 +137,31 @@ public class Mic extends AppCompatActivity {
         mRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean mStartRecording = true;
 
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    Toast.makeText(Mic.this, "Stop recording", Toast.LENGTH_SHORT).show();
-                } else {
                     Toast.makeText(Mic.this, "Start recording", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Mic.this, "Stop recording", Toast.LENGTH_SHORT).show();
                 }
                 mStartRecording = !mStartRecording;
             }
         });
-        mPlayButton.setOnClickListener( new View.OnClickListener(){
+        mPlayButton.setOnClickListener(new View.OnClickListener() {
 
-            boolean mStartPlaying = true;
+            public void onClick(View v) {
 
-            public void onClick(View v){
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    Toast.makeText(Mic.this, "Stop playing", Toast.LENGTH_SHORT).show();
-                } else {
                     Toast.makeText(Mic.this, "Start playing", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Mic.this, "Stop playing", Toast.LENGTH_SHORT).show();
                 }
                 mStartPlaying = !mStartPlaying;
             }
         });
 
-
-
-        myrqst = new MyStringRequest();
+        //myrqst = new MyStringRequest();
         Button button_mic_talk = (Button) findViewById(R.id.button_talk);
         button_mic_talk.setOnClickListener(new View.OnClickListener() {
 
@@ -174,17 +174,14 @@ public class Mic extends AppCompatActivity {
 
         Button button_home = (Button) findViewById(R.id.button_home);
         button_home.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                // TODO : on click home
-
-                Intent i = new Intent(getApplicationContext(), Menu.class);
-                startActivity(i);
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
             }
         });
-
-
     }
-
 }
+
+
+
