@@ -13,7 +13,8 @@ import android.widget.VideoView;
 
 public class Camera extends AppCompatActivity {
 
-    private String src = "http://192.168.1.114:8081/";
+
+    private String src = "http://172.16.73.161:8081/";
 
     VideoView streamView;
     MediaController mediaController;
@@ -26,10 +27,10 @@ public class Camera extends AppCompatActivity {
 
        // streamView = (VideoView)findViewById(R.id.streamView);
 
-        String piAddr = "http://192.168.1.114:8081/";
+
 
         webView = (WebView) findViewById(R.id.webView);
-        webView.loadUrl(piAddr);
+        webView.loadUrl(src);
         Button button_home = (Button) findViewById(R.id.button_home);
 
 

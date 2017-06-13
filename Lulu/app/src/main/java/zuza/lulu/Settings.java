@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class Settings extends AppCompatActivity {
 
     private  MyStringRequest myrqst;
+    final String address= "http://172.16.73.161/?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +33,30 @@ public class Settings extends AppCompatActivity {
         myrqst = new MyStringRequest();
 
 
-        Switch swing= (Switch) findViewById(R.id.swing_switch);
+        Switch swing_switch= (Switch) findViewById(R.id.switch_swigning);
         Switch notif= (Switch) findViewById((R.id.notification_switch));
         Switch music= (Switch) findViewById(R.id.switch_music);
 
-
-        swing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        notif.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // do something, the isChecked will be
-                // true if the switch is in the On position
-                if(isChecked){
-                   // myrqst.zuza("http://192.168.1.114/?led4=1")
-                    // Add a request (in this example, called stringRequest) to your RequestQueue.
-                    Toast.makeText(getApplicationContext(),"is checked", Toast.LENGTH_SHORT).show();
-                    //MySingleton.getInstance(getApplicationContext()).addToRequestQueue( myrqst.zuza("http://192.168.1.114/?led4=1"));
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "is not checked", Toast.LENGTH_SHORT).show();
-                   // MySingleton.getInstance(getApplicationContext()).addToRequestQueue( myrqst.zuza("http://192.168.1.114/?led4=0"));
-                }
+
+            }
+        });
+        music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)  MySingleton.getInstance(getApplicationContext()).addToRequestQueue(myrqst.zuza(address +"led2=1"));
+               else    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(myrqst.zuza(address +"led2=0"));
+            }
+        });
+
+        swing_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                MySingleton.getInstance(getApplicationContext()).addToRequestQueue( myrqst.zuza(address +"led4=1"));
+                else MySingleton.getInstance(getApplicationContext()).addToRequestQueue( myrqst.zuza(address +"led4=0"));
             }
         });
 
