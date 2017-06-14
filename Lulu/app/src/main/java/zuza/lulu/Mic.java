@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Mic extends AppCompatActivity {
@@ -167,10 +168,29 @@ public class Mic extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO : on click mic talking
+                String url = "http://192.168.1.104/uploads.php";
+                File file = new File("hahaha");
+        /*
+                try {
+                    HttpClient httpclient = new DefaultHttpClient();
+
+                    HttpPost httppost = new HttpPost(url);
+
+                    InputStreamEntity reqEntity = new InputStreamEntity(
+                            new FileInputStream(file), -1);
+                    reqEntity.setContentType("binary/octet-stream");
+                    reqEntity.setChunked(true); // Send in multiple parts if needed
+                    httppost.setEntity(reqEntity);
+                    HttpResponse response = httpclient.execute(httppost);
+                    //Do something with response...
+
+                } catch (Exception e) {
+                    // show error
+                }
 
             }
         });
+        */
 
         Button button_home = (Button) findViewById(R.id.button_home);
         button_home.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +201,9 @@ public class Mic extends AppCompatActivity {
             }
         });
     }
+
+
+
 }
 
 
